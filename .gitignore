@@ -1,3 +1,2 @@
 reddit_env
-r_thinkpad_comments.jsonl
-r_thinkpad_posts.jsonl
+*.jsonl

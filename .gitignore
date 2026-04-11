@@ -1,6 +1,4 @@
 reddit_env
 *.jsonl
 .env
-*.pkl
 .DS_Store
-*.pqt

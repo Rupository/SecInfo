@@ -3,3 +3,4 @@ reddit_env
 .env
 *.pkl
 .DS_Store
+*.pqt

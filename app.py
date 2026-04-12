@@ -1,6 +1,7 @@
 # [AI Disclosure: initially one-shotted by Gemini, refined by me]
 import streamlit as st
 import pandas as pd
+import numpy as np
 
 st.set_page_config(page_title="SecInfo", layout="wide")
 st.title("SecInfo", text_alignment='center')
@@ -9,10 +10,13 @@ st.subheader("Topical Analysis of r/cybersecurity Posts, 2024-01-01 to 2026-04-1
 st.divider()
 
 def clean_text(x):
+    if isinstance(x, (list, np.ndarray)):
+        if len(x) > 1:
+            return x
+        x = " ".join(map(str, x))
+    
     if isinstance(x, str):
         x = x.replace('[', '').replace(']', '').replace("'", "").replace('"', '').strip()
-        if ',' in x:
-            x = " - ".join(x.split(','))
     return x
 
 @st.cache_data
@@ -21,7 +25,7 @@ def load_data():
     topic_data = pd.read_parquet('cybersec_topic_data.pqt')
     user_data = pd.read_parquet('cybersec_user_data.pqt')
 
-    cols_to_fix = ['Label', 'Description', 'Top (10) Keywords','Dominant Position', 'Supporting Arguments', 'Opposing Arguments']
+    cols_to_fix = ['Label', 'Description', 'Top (10) Keywords', 'Dominant Position', 'Supporting Arguments', 'Opposing Arguments']
     for col in cols_to_fix:
         if col in topic_data.columns:
             topic_data[col] = topic_data[col].apply(clean_text)
@@ -52,7 +56,7 @@ topic_type = st.radio(label='Type',
 )
 
 filtered_topics = topic_data.copy()
-if topic_type != "all":
+if topic_type != "All":
     filtered_topics = filtered_topics[filtered_topics['Over Time'] == topic_type]
 
 st.dataframe(

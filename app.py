@@ -46,7 +46,7 @@ st.divider()
 st.header("Topic Exploration")
 
 topic_type = st.radio(label='Type',
-    options=["all", "trending", "persistent"],
+    options=["All", "Trending", "Persistent"],
     horizontal=True,
     label_visibility='hidden'
 )

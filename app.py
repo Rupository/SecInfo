@@ -48,7 +48,7 @@ with col4:
 st.divider()
 
 st.header("Topic Exploration")
-st.image('Topics_Over_Time.png')
+st.image('Topics_Over_Time.png', width='stretch')
 topic_type = st.radio(label='Type',
     options=["All", "Trending", "Persistent"],
     horizontal=True,

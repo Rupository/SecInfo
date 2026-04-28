@@ -2,3 +2,4 @@ reddit_env
 *.jsonl
 .env
 .DS_Store
+/cybersec_chroma_db

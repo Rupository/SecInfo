@@ -30,7 +30,7 @@ def load_data():
     discourse_full_df = pd.read_parquet('cybersec_discourse_full_data.parquet')
     discourse_topic_data = pd.read_parquet('cybersec_discourse_topic_data.parquet')
     
-    discourse_user_data = None #pd.read_parquet('cybersec_discourse_user_data.parquet')
+    discourse_user_data = pd.read_parquet('cybersec_discourse_user_data.parquet')
 
     cols_to_fix = ['Label', 'Description', 'Top (10) Keywords', 'Dominant Position', 'Supporting Arguments', 'Opposing Arguments']
     
@@ -39,7 +39,7 @@ def load_data():
             if col in df.columns:
                 df[col] = df[col].apply(clean_text)
             
-    return full_df, topic_data, discourse_full_df, discourse_topic_data, #dicourse_user_data
+    return full_df, topic_data, discourse_full_df, discourse_topic_data, discourse_user_data
 
 @st.cache_resource
 def init_chroma():
@@ -97,7 +97,7 @@ def retrieve(query, n_results=5):
             
     return "\n\n---------------------------------------------------------\n\n".join(enriched_contexts)
 
-full_df, topic_data, discourse_full_df, discourse_topic_data = load_data() # discourse_user_data = load_data()
+full_df, topic_data, discourse_full_df, discourse_topic_data, discourse_user_data = load_data()
 
 st.header("Subreddit Overview")
 col1, col2, col3, col4 = st.columns(4, border=True)
@@ -132,7 +132,7 @@ st.dataframe(
 
 st.divider()
 
-st.header("Ask the Assistants")
+st.header("Ask the Assistants!")
 selected_model = st.radio(label="Choose Model:", options=["gemma4:e2b", "qwen3.5:2b"], horizontal=True, label_visibility='hidden')
 
 client = OpenAI(
